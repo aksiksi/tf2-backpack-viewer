@@ -27,7 +27,7 @@ def get_player_response(steamid, API_KEY, folder='players'):
     '''Get player response from Steam API, if it doesn't already exist in cache.'''
     in_cache = check_in_cache(steamid, folder)
 
-    # Return cached response if true
+    # Return cached response if it is already in the cache
     if in_cache:
         response = read_from_cache(steamid, folder)
         return response
@@ -47,7 +47,7 @@ def get_item_response(steamid, API_KEY, folder='items'):
     '''Get item response from Steam API, if it doesn't already exist in cache.'''
     in_cache = check_in_cache(steamid, folder)
 
-    # Return cached response if true
+    # Return cached response if it is already in the cache
     if in_cache:
         response = read_from_cache(steamid, folder)
         return response
@@ -58,12 +58,15 @@ def get_item_response(steamid, API_KEY, folder='items'):
     response = json.loads(text)['result']
 
     # Write response to cache if it exists and contains items
-    if response['status'] == 1 and response['items']:
+    status = response['status']
+    if status == 1 and None not in response['items']['item']:
         return write_to_cache(steamid, response, folder)
-    elif response['status'] != 1:
+    elif status == 8 or status == 18:
         return None
-    elif not response['items']:
+    elif status == 15:
         return -1
+    elif None in response['items']['item']:
+        return -2
 
 def find_steamid(parameter, type):
     '''Find 64-bit Steam ID based on passed parameter.'''
@@ -113,7 +116,14 @@ def replace_item_names(parsed_items):
         'Upgradeable TF_WEAPON_MEDIGUN': 'Medigun',
         'Upgradeable TF_WEAPON_INVIS': 'Inviswatch',
         'Upgradeable TF_WEAPON_BUILDER_SPY': 'Sapper',
-        'Upgradeable TF_WEAPON_PDA_ENGINEER_BUILD': 'PDA'
+        'Upgradeable TF_WEAPON_PDA_ENGINEER_BUILD': 'PDA',
+        'Craft Bar Level 1': 'Scrap Metal',
+        'Craft Bar Level 2': 'Reclaimed Metal',
+        'Craft Bar Level 3': 'Refined Metal',
+        'TTG Max Pistol - Poker Night': 'Lugermorph',
+        'OSX Item': 'Earbuds',
+        'Treasure Hat 1': 'Bounty Hat',
+        'Treasure Hat 2': 'Treasure Hat'
         }
     
     for item in parsed_items[1:]:
@@ -141,7 +151,6 @@ def parse_item_response(response):
     time_written = ctime(ordered_response['time_written']) # Timestamp in ASCII form
     item_qualities = {v:k for k, v in tf2_item_schema['qualities'].items()} # Reverse dict to make searching easier
     item_origins = {each['origin']:each['name'] for each in tf2_item_schema['originNames']} # Map origin number to name
-    # req = ['name', 'level', 'quality', 'quantity', 'defindex', 'id', 'original_id', 'origin', 'image_url'] # Required info
     req = [
         ('image_url', 'Image'),
         ('name', 'Name'),
@@ -212,14 +221,16 @@ def parse_player_response(response):
     time_written = ctime(response['time_written'])
     ordered_response = OrderedDict()
     req = [
-        ('avatarmedium', 'Avatar'),
         ('personaname', 'Profile Name'),
+        ('avatarmedium', 'Avatar'),
         ('steamid', 'Steam ID'),
         ('realname', 'Real Name'),
+        ('personastate', 'Status'),
         ('lastlogoff', 'Last Logoff'),
         ('timecreated', 'Account Creation Date'),
-        ('profileurl', 'Profile'),
+        ('profileurl', 'Profile')
     ]
+    status = ['Offline', 'Online', 'Busy', 'Away', 'Snooze', 'Looking to Trade', 'Looking to Play']
 
     # Populate ordered_response with player info; if entry is time-related, convert time to ASCII format
     for pair in req:
@@ -228,13 +239,15 @@ def parse_player_response(response):
         if key in player_info:
             if key == 'lastlogoff' or key == 'timecreated':
                 ordered_response[new_key] = ctime(player_info[key])
+            elif key == 'personastate': # Get user status]
+                ordered_response[new_key] = status[player_info[key]]
             else:
                 ordered_response[new_key] = player_info[key]
         else:
             if key == 'realname':
                 ordered_response[new_key] = 'Not listed'
 
-    return ordered_response, time_written
+    return [ordered_response, time_written]
 
 if __name__ == '__main__':
     pass
