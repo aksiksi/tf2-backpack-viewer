@@ -1,6 +1,5 @@
 import sqlite3, requests, json
-from flask import Flask, request, session, g, redirect, \
-     abort, url_for, render_template, flash
+from flask import Flask, request, url_for, render_template
 from database import *
 from parse import *
 from time import time, asctime
