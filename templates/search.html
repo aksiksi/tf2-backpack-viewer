@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>TF2 BP Viewer</title>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+    </head>
+    <body>
+        <!-- Begin navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{{ url_for('index') }}">
+                        TF2BV
+                    </a>
+                    <ul class="nav">
+                        <li>
+                            <a href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="active"><a href="{{ url_for('search') }}">Search</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                    </ul>
+                    <form action="{{ url_for('result') }}" class="navbar-search pull-left">
+                        <input name="s" type="text" class="search-query" placeholder="Enter an ID..">
+                        <select name="t" id="select01">
+                            <option value="profile">Profile Name</option>
+                            <option value="steamid64">SteamID 64</option>
+                            <option value="steamid">SteamID</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End navbar -->
+        
+        <!-- Begin form -->
+        <div class="well">
+            <h1>Search</h1>
+            <br />
+            <p>You can enter one of three identifiers:</p>
+            <ul>
+                <li>Profile name (http://steamcommunity.com/id/xxxxxxxxxx)</li>
+                <li>Steam ID 64 (765611xxxxxxxx)</li>
+                <li>Old Steam ID (STEAM_X:X:XXXXX)</li>
+            </ul>
+            <p>Be sure to select the corresponding format from the dropdown menu before submitting, or else you'll get an error.</p>      
+            <br />
+            <form action="{{ url_for('result') }}" class="form-search">
+                <input type="text" class="input-xlarge search-query" placeholder="Enter an ID.." name="s">
+                <select name="t" id="select01">
+                    <option value="profile">Profile Name</option>
+                    <option value="steamid64">SteamID 64</option>
+                    <option value="steamid">SteamID</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <!-- End form -->
+        
+        <!-- Begin result -->
+        {% block body %}{% endblock %}
+        <!-- End result -->
+        
+        <!-- Begin footer -->
+        <div class="well" align="center">
+            <p>Site made using Twitter Bootstrap. Today's date: {{ date }}.</p>
+        </div>
+        <!-- End footer -->
+    </body>
+</html>

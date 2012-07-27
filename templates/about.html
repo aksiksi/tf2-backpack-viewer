@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>TF2 BP Viewer</title>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+    </head>
+    <body>
+        <!-- Begin navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{{ url_for('index') }}">
+                        TF2BV
+                    </a>
+                    <ul class="nav">
+                        <li>
+                            <a href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li><a href="{{ url_for('search') }}">Search</a></li>
+                        <li class="active"><a href="{{ url_for('about') }}">About</a></li>
+                    </ul>
+                    <form action="{{ url_for('result') }}" class="navbar-search pull-left">
+                        <input name="s" type="text" class="search-query" placeholder="Enter an ID..">
+                        <select name="t" id="select01">
+                            <option value="profile">Profile Name</option>
+                            <option value="steamid64">SteamID 64</option>
+                            <option value="steamid">SteamID</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End navbar -->
+        
+        <!-- Begin content -->
+        <div class="well">
+            <h1>About</h1>
+            <br />
+            <p>
+                This website started out as a weekend Python project. It was created by Assil Ksiksi (<a href="https://twitter.com/Cyph0n">@Cyph0n</a>) to aid the fellow in improving his Python and Flask programming. The template (or theme) used is 
+                <a href="http://twitter.github.com/bootstrap/index.html">Twitter Bootstrap</a>, an extremely flexible and well-documented UI. 
+                The project in its entirety can be found on the creator's <a href="https://github.com/Cyph0n">GitHub page</a>.
+            </p>
+            <h3>How?</h3>
+            <p>
+                The app itself is, as mentioned, written in the Flask web framework for Python. I'd like to roughly outline
+                what the app goes through each time a request is made, to give an idea of the inner workings of the app to
+                anybody who is interested.
+            </p>
+            <ol>
+                <li>The app gets (no pun intended) the search query, the dropdown menu option, and the state of the checkbox.</li>
+                <li>
+                    Depending on the dropdown option, a function converts (or doesn't) the input to SteamID64 format,
+                    because this is what the Steam API requires.
+                </li>
+                <li>If the SteamID is new i.e. the app hasn't served it before, a request is made to the Steam API, which returns the user's backpack contents.</li>
+                <li>If it isn't new, the app instead gets the item response from the cache, under the condition that the data is no older than 3 days.</li>
+                <li>Next, the item response is passed to another function, where it is parsed and formatted, so it can be nicely outputted in HTML.</li>
+                <li>Finally, all the processed data is passed to the template, where Jinja2, a templating engine, allows everything to be nicely outputted to the page.</li>
+            </ol>
+            <h3>References</h3>
+            <p>This is beginning to look more like a research paper than a About page, eh? Anyways, here are the resources
+                I used to achieve this result.
+            </p>
+            <ul>
+                <li><a href="http://steamcommunity.com/dev/">Steam API Reference</a></li>
+                <li><a href="http://flask.pocoo.org/docs/">Flask Docs</a></li>
+            </ul>
+            <h3>Help</h3>
+            <p>
+                If you need any help using this website, or if you'd like help understanding the code, please don't hesitate
+                to contact me by email cyph0nik [at] gmail [fullstop] com or through my Twitter account (linked above). Please submit
+                any bug requests to the app's <a href="https://github.com/Cyph0n/tf2-backpack-viewer/issues">issue tracker</a> on GitHub.
+            </p>
+        </div>
+        <!-- End content -->
+    </body>
+</html>

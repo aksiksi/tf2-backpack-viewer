@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+{% extends "search.html" %}
+{% block body %}
+    <!-- Begin player info -->
+    <div class="well">
+        <h2>Player Information:</h2>
+        {% if player %}
+            {% for key in player[0] %}
+                {% if key == 'Avatar' %}
+                    <img src="{{ player[0][key] }}" />
+                {% else %}
+                    <p><strong>{{ key }}: </strong>{{ player[0][key] }}</p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Invalid ID entered.</p>
+        {% endif %}
+    </div>
+    <!-- End player info -->
+
+    <!-- Begin backpack contents -->
+    <div class="well">
+        <h2>Backpack contents:</h2>
+        {% if not items %}
+            <p>Invalid ID entered.</p>
+        {% elif items == -1 %}
+            <p>User's backpack is empty.</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <!-- Write headers (dict keys) to first row -->
+                        {% for header in items[0][0] %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                {% for item in items[0] %}
+                    <tr id="{{ item['Quality'] }}">
+                        {% for key, value in item.items() %}
+                            {% if key == 'Image' %}
+                                <td><img src="{{ value }}" height="60px"/></td>
+                            {% else %}
+                                <td>{{ value }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+    <!-- End backpack contents -->
+
+    <!-- Begin time and info-->
+    <div class="well">
+        {% if items > 0 %}
+            <p>Item data last scraped on {{ items[1] }}.</p>
+        {% endif %}
+        {% if player %}
+            <p>Player data last scraped on {{ player[1] }}.</p>
+        {% endif %}
+        <p>Info retrieved in {{ time }} seconds. Rendering time not included.</p>
+    </div>
+    <!-- End time and info-->
+{% endblock %}
