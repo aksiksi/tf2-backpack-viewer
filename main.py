@@ -7,14 +7,14 @@ from time import time, asctime
      
 # App config
 DATABASE = '' # Not required yet
-DEBUG = True # Set to true once deployed
+DEBUG = True # Set to False once deployed
 SECRET_KEY = '' # Use os.urandom()
-
-# Must be defined
-API_KEY = ''
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+# Steam API key: must be defined
+API_KEY = ''
 
 # Current date
 now = asctime()
@@ -25,6 +25,7 @@ date = now[4:10] + now[19:]
 def index():
     return render_template('index.html', date=date)
 
+# Search page; parent of result template
 @app.route('/search')
 def search():
     return render_template('search.html', date=date)
@@ -52,12 +53,13 @@ def result():
     responses['player'] = parse_player_response(responses['player'])
     responses['item'] = parse_item_response(responses['item'])
 
-    # Add bp_slots to player dict and removes it from item dict
-    if responses['player']:
+    # Add bp_slots to player dict and remove it from item dict if player and item data is valid
+    if responses['player'] and responses['item'] > 0:
         responses['player'][0]['Backpack Slots'] = '{0}/{1}'.format(len(responses['item'][0]), responses['item'].pop(1))
 
     return render_template('result.html', player=responses['player'], items=responses['item'], time=time()-start, date=date)
 
+# About page
 @app.route('/about')
 def about():
     return render_template('about.html')
