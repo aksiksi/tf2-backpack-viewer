@@ -3,11 +3,15 @@
 {% block body %}
     <!-- Begin player info -->
     <div class="well">
-        <h2>Player Information:</h2>
+        <h2>Player Information</h2>
         {% if player %}
             {% for key in player[0] %}
                 {% if key == 'Avatar' %}
+                    <p><strong>{{ key }}: </strong>
+                    <br />
                     <img src="{{ player[0][key] }}" />
+                {% elif key == 'Profile' %}
+                    <p><strong>{{ key }}: </strong><a href="{{ player[0][key] }}">{{ player[0][key] }}</a></p>
                 {% else %}
                     <p><strong>{{ key }}: </strong>{{ player[0][key] }}</p>
                 {% endif %}
@@ -20,21 +24,30 @@
 
     <!-- Begin backpack contents -->
     <div class="well">
-        <h2>Backpack contents:</h2>
+        <h2>Backpack</h2>
         {% if not items %}
             <p>Invalid ID entered.</p>
         {% elif items == -1 %}
+            <p>User's backpack is private.</p>
+        {% elif items == -2 %}
             <p>User's backpack is empty.</p>
         {% else %}
-            <table class="table">
+            <h3>Tips</h3>
+            <ul>
+                <li>If an item's ID and Original ID are the same, know that the user got the item themselves.</li>
+                <li>The identifier value identifies the item, so searching for a identifier in a backpack will return the same item(s).</li>
+            </ul>
+            <table id="results" class="table">
+                <!-- Write headers (dict keys) to table head -->
                 <thead>
                     <tr>
-                        <!-- Write headers (dict keys) to first row -->
                         {% for header in items[0][0] %}
                             <th>{{ header }}</th>
                         {% endfor %}
                     </tr>
                 </thead>
+                <tbody>
+                <!-- Write item data (dict values) to table body -->
                 {% for item in items[0] %}
                     <tr id="{{ item['Quality'] }}">
                         {% for key, value in item.items() %}
@@ -46,6 +59,7 @@
                         {% endfor %}
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         {% endif %}
     </div>
@@ -53,11 +67,12 @@
 
     <!-- Begin time and info-->
     <div class="well">
+        <h2>Numbers</h2>
         {% if items > 0 %}
-            <p>Item data last scraped on {{ items[1] }}.</p>
+            <p>Item data last requested on {{ items[1] }}.</p>
         {% endif %}
         {% if player %}
-            <p>Player data last scraped on {{ player[1] }}.</p>
+            <p>Player data last requested on {{ player[1] }}.</p>
         {% endif %}
         <p>Info retrieved in {{ time }} seconds. Rendering time not included.</p>
     </div>
