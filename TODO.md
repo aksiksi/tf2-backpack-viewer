@@ -1,6 +1,10 @@
 TODO
 ----
 
+[x] = Done
+[-] = Not necessary
+[+] = In progress
+
 1. Cache management (player and items):
 	* Implement seperate function that checks if either or both is in cache. [x]
 	* Modify cache reader/writer to accept a folder depending on item or player response [x]
@@ -14,3 +18,7 @@ TODO
 	* Write function that takes in joined (see no. 3) parsed response and returns it with modified names. [-]
 5. Templates:
 	* Add Bootstrap well above backpack results to show player data. [x]
+	* Add table sorting mechanism. [x]
+6. Database:
+	* Re-implement database method.
+	* Configure it to write necessary item and player data to seperate DBs.
