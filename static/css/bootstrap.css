@@ -1524,12 +1524,14 @@ table {
 }
 
 /* Used for coloring purposes. */
-#strange {background: #F78205}
-#unique {background: #EBDC0C}
-#unusual {background: #8E16F0}
-#vintage {background: #275EF5}
-#haunted {background: #B811FA}
-#genuine {background: #0C6627}
+#Strange {background: #F78205}
+#Unique {background: #EBDC0C}
+#Unusual {background: #8E16F0}
+#Vintage {background: #275EF5}
+#Haunted {background: #B811FA}
+#Genuine {background: #0C6627}
+#Community {background: #F763BE}
+#Self-Made {background: #29E342}
 
 .table th,
 .table td {
