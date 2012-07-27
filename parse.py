@@ -149,7 +149,7 @@ def parse_item_response(response):
     schema_items = tf2_item_schema['items']
     bp_slots = ordered_response['num_backpack_slots']
     time_written = ctime(ordered_response['time_written']) # Timestamp in ASCII form
-    item_qualities = {v:k for k, v in tf2_item_schema['qualities'].items()} # Reverse dict to make searching easier
+    item_qualities = {v:k.title() for k, v in tf2_item_schema['qualities'].items()} # Reverse dict to make searching easier
     item_origins = {each['origin']:each['name'] for each in tf2_item_schema['originNames']} # Map origin number to name
     req = [
         ('image_url', 'Image'),
@@ -186,8 +186,12 @@ def parse_item_response(response):
             if attr in item:
                 if attr == 'quality':
                     quality = item_qualities[item[attr]]
-                    if quality == 'rarity1':
-                        current_item[new_attr] = 'genuine'
+                    if quality == 'Rarity1':
+                        current_item[new_attr] = 'Genuine'
+                    elif quality == 'Rarity4':
+                        current_item[new_attr] = 'Unusual'
+                    elif quality == 'Selfmade':
+                        current_item[new_attr] = 'Self-Made'
                     else:
                         current_item[new_attr] = quality
                 elif attr == 'origin':
