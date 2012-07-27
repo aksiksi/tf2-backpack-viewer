@@ -3,6 +3,15 @@
     <head>
         <title>TF2 BP Viewer</title>
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery-latest.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery.tablesorter.js') }}"></script>
+        <script type="text/javascript" id="js">
+        $(document).ready(function() 
+            { 
+                $("#results").tablesorter(); 
+            } 
+        ); 
+        </script>
     </head>
     <body>
         <!-- Begin navbar -->
