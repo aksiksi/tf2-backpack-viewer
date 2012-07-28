@@ -52,9 +52,9 @@ def result():
     responses['player'] = parse_player_response(responses['player'])
     responses['item'] = parse_item_response(responses['item'])
 
-    # Add bp_slots to player dict and remove it from item dict if player and item data is valid
+    # Add bp_slots to player dict and remove it from item dict
     if responses['player'] and responses['item'] > 0:
-        responses['player'][0]['Backpack Slots'] = '{0}/{1}'.format(len(responses['item'][0]), responses['item'].pop(1))
+        responses['player']['Backpack Slots'] = '{0}/{1}'.format(len(responses['item'][0]), responses['item'].pop(1))
 
     return render_template('result.html', player=responses['player'], items=responses['item'], time=time()-start, date=date)
 

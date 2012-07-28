@@ -19,27 +19,19 @@ def from_profile_to_64(steamid):
         xml = etree.fromstring(doc)
         steamid64 = xml.findtext('steamID64')
     except:
-        return None
-    
-    return steamid64
+        steamid64 = None
+    finally:
+        return steamid64
 
-def get_player_response(steamid, API_KEY, folder='players'):
-    '''Get player response from Steam API, if it doesn't already exist in cache.'''
-    in_cache = check_in_cache(steamid, folder)
-
-    # Return cached response if it is already in the cache
-    if in_cache:
-        response = read_from_cache(steamid, folder)
-        return response
-
-    # Otherwise grab response using Steam API
+def get_player_response(steamid, API_KEY):
+    '''Get player response from Steam API; no caching - data must be fresh.'''
     text = requests.get('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?steamids={0}&key={1}'. \
                          format(steamid, API_KEY)).text.encode('UTF-8') # Make sure it's UTF-8
     response = json.loads(text)['response']
 
-    # Write response to cache if it contains data
+    # Return response only if it contains data
     if response['players']:
-        return write_to_cache(steamid, response, folder)
+        return response
 
     return None
 

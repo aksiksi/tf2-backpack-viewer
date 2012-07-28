@@ -5,15 +5,15 @@
     <div class="well">
         <h2>Player Information</h2>
         {% if player %}
-            {% for key in player[0] %}
+            {% for key in player %}
                 {% if key == 'Avatar' %}
                     <p><strong>{{ key }}: </strong>
                     <br />
-                    <img src="{{ player[0][key] }}" />
+                    <img src="{{ player[key] }}" />
                 {% elif key == 'Profile' %}
-                    <p><strong>{{ key }}: </strong><a href="{{ player[0][key] }}">{{ player[0][key] }}</a></p>
+                    <p><strong>{{ key }}: </strong><a href="{{ player[key] }}">{{ player[key] }}</a></p>
                 {% else %}
-                    <p><strong>{{ key }}: </strong>{{ player[0][key] }}</p>
+                    <p><strong>{{ key }}: </strong>{{ player[key] }}</p>
                 {% endif %}
             {% endfor %}
         {% else %}
@@ -66,14 +66,14 @@
     </div>
     <!-- End backpack contents -->
 
-    <!-- Begin time and info-->
+     <!-- Begin time and info-->
     <div class="well">
         <h2>Numbers</h2>
         {% if items > 0 %}
             <p>Item data last requested on {{ items[1] }}.</p>
         {% endif %}
         {% if player %}
-            <p>Player data last requested on {{ player[1] }}.</p>
+            <p>Player data is fresh.</p>
         {% endif %}
         <p>Info retrieved in {{ time }} seconds. Rendering time not included.</p>
     </div>
