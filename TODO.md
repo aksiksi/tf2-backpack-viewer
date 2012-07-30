@@ -22,6 +22,7 @@ TODO
 	* Add Bootstrap "well" above backpack results to show player data. [x]
 	* Add table sorting mechanism. [x]
  	* Look for simply JS library for info on hover to return results as boxes instead of a table.
+  	* Implement template inheritance.
 6. Database:
 	* Re-implement database methods using MySQLdb library. [+]
 	* Configure it to write necessary item and player data to seperate DBs. [+]
