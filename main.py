@@ -29,6 +29,11 @@ def index():
 def search():
     return render_template('search.html', date=date)
 
+# Allows result retrieval using custom URL
+@app.route('/bp/<profile>')
+def backpack(profile):
+    return redirect(url_for('result', s=profile, t='profile'))
+
 # Show results
 @app.route('/result', methods=['GET'])
 def result():
@@ -37,10 +42,10 @@ def result():
     
     # Get form parameters
     parameter = request.args.get('s')
-    type = request.args.get('t')
+    category = request.args.get('t')
 
     # Find steamid
-    steamid = find_steamid(parameter, type)
+    steamid = find_steamid(parameter, category)
 
     # Get responses if steamid is valid
     responses = {'item': None, 'player': None}
@@ -61,7 +66,7 @@ def result():
 # About page
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', date=date)
 
 if __name__ == '__main__':
     app.run()

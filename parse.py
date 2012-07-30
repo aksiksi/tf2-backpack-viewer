@@ -60,17 +60,17 @@ def get_item_response(steamid, API_KEY, folder='items'):
     elif None in response['items']['item']:
         return -2
 
-def find_steamid(parameter, type):
+def find_steamid(parameter, category):
     '''Find 64-bit Steam ID based on passed parameter.'''
-    if ('765611980' in parameter and len(parameter) == 17) and type == 'steamid64':
+    if ('765611980' in parameter and len(parameter) == 17) and category == 'steamid64':
         steamid64 = parameter
-    elif 'STEAM_' in parameter and type == 'steamid':
+    elif 'STEAM_' in parameter and category == 'steamid':
         # Make sure it's not just a customURL
         try:
             steamid64 = from_normal_to_64(parameter)
         except: 
             steamid64 = from_profile_to_64(parameter)
-    elif parameter and type == 'profile':
+    elif parameter and category == 'profile':
         steamid64 = from_profile_to_64(parameter)
     else:
         return False

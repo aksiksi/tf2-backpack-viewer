@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %} - TF2BV</title>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+        {% block js %}{% endblock %}
+    </head>
+    <body>
+        <!-- Begin navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{{ url_for('index') }}">
+                        TF2BV
+                    </a>
+                    {% block links %}{% endblock %}
+
+                    <form action="{{ url_for('result') }}" class="navbar-search pull-left">
+                        <input name="s" type="text" class="search-query" placeholder="Enter an ID..">
+                        <select name="t" id="select01">
+                            <option value="profile">Profile Name</option>
+                            <option value="steamid64">SteamID 64</option>
+                            <option value="steamid">SteamID</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End navbar -->
+        
+        <!-- Begin body -->
+        {% block body %}{% endblock %}
+        <!-- End body -->
+
+        <!-- Begin footer -->
+        <div class="well" align="center">
+            <p>
+               Site made using Twitter Bootstrap and <a href="http://flask.pocoo.org/"><img
+               src="http://flask.pocoo.org/static/badges/powered-by-flask-s.png"
+               border="0"
+               alt="powered by Flask"
+               title="powered by Flask"></a>
+           </p>
+           <p>Today's date: {{ date }}</p>
+        </div>
+        <!-- End footer -->
+    </body>
+</html>
