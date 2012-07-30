@@ -1,6 +1,7 @@
-<!DOCTYPE HTML>
 {% extends "search.html" %}
-{% block body %}
+
+<!-- Results -->
+{% block results %}
     <!-- Begin player info -->
     <div class="well">
         <h2>Player Information</h2>
@@ -38,7 +39,7 @@
                 <li>The identifier value identifies the item, so searching for a identifier in a backpack will return the same item(s).</li>
                 <li>Click on a header to sort the items by that property.</li>
             </ul>
-            <table id="results" class="table">
+            <table id="results" class="table table-sorter">
                 <!-- Write headers (dict keys) to table head -->
                 <thead>
                     <tr>
@@ -66,7 +67,7 @@
     </div>
     <!-- End backpack contents -->
 
-     <!-- Begin time and info-->
+    <!-- Begin time and info-->
     <div class="well">
         <h2>Numbers</h2>
         {% if items > 0 %}
