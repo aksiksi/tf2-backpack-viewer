@@ -3,11 +3,13 @@ tf2-backpack-viewer
 
 A simple Flask app that grabs and displays TF2 player and backpack information.
 
-Requires (can be grabbed using pip install -r requirements.txt)
+Requires
 ========
 
 - Flask
 - Requests
+
+(can be grabbed using pip install -r requirements.txt)
 
 TODO
 ====
