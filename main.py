@@ -24,12 +24,12 @@ def date():
 # Main page
 @app.route('/')
 def index():
-    return render_template('index.html', date=date)
+    return render_template('index.html')
 
 # Search page; parent of result template
 @app.route('/search')
 def search():
-    return render_template('search.html', date=date)
+    return render_template('search.html')
 
 # Result retrieval using custom URL
 @app.route('/bp/<profile>')
@@ -68,7 +68,7 @@ def result():
 # About page
 @app.route('/about')
 def about():
-    return render_template('about.html', date=date)
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run()
