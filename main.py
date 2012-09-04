@@ -5,7 +5,7 @@ from time import asctime
      
 # App config
 DATABASE = '' # Not required yet
-DEBUG = True # Set to False once deployed
+DEBUG = False # Set to False once deployed
 SECRET_KEY = '' # Use os.urandom()
 
 app = Flask(__name__)
