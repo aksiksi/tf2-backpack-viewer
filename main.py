@@ -1,4 +1,4 @@
-import sqlite3, requests, json
+import requests, json
 from flask import Flask, request, url_for, render_template
 from parse import *
 from time import asctime
